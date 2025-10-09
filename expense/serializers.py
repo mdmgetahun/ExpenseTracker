@@ -6,7 +6,7 @@ from .models import Expense, CustomUser, Category
 class CategorySerialzer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = {'id', 'name'}
+        fields = ('id', 'name')
 
     def create(self, validated_data):
         user = self.context['request'].user #makes sure every category is linked to the logged in user
@@ -15,6 +15,5 @@ class CategorySerialzer(serializers.ModelSerializer):
 class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense
-        fields = {'id', 'username'}
+        fields = ('id', 'category', 'amount', 'description', 'date')
 
-    def create
