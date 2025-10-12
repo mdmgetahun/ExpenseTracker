@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.routers import DefaultRouter
 from .models import Expense, CustomUser, Category
 from django.contrib.auth.models import User
 
@@ -7,14 +6,17 @@ from django.contrib.auth.models import User
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['username', 'email', 'password']
     
     def create(self, validated_data):
-        user = User(username = validated_data['username'],
-        email = validated_data['email'])
-        user.set_password(validated_data['password'])
-        user.save()
+        user = CustomUser.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
+        # user.set_password(validated_data['password'])
+        # user.save()
         return user
 
 class CategorySerializer(serializers.ModelSerializer):

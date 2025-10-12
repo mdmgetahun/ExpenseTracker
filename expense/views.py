@@ -15,7 +15,8 @@ class RegisterAPIView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             return Response({"message": "User registered successfully"}, status=201) #status 201 indicates successful creation
-        return Response(serializer.errors, status=400) #this will return any validation errors if the data is not valid
+        return Response({"errors": serializer.errors,
+                         "message": "check input data"}, status=400) #this will return any validation errors if the data is not valid
 
 class LoginAPIView(APIView):
     def post(self, request, *args, **kwargs):
