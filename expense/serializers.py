@@ -29,12 +29,17 @@ class CategorySerializer(serializers.ModelSerializer):
         return Category.objects.create(user=user, **validated_data)
 
 class ExpenseSerializer(serializers.ModelSerializer):
+    category = serializers.SlugRelatedField(
+        queryset=Category.objects.all(),
+        slug_field='name'
+    ) #This will show the category by its name instead of its id
+
     class Meta:
         model = Expense
-        fields = ('id', 'category', 'amount', 'description', 'date')
+        fields = ['id', 'category', 'amount', 'description', 'date']
 
-    def create(self, validated_data):
-        user = self.context['request'].user #makes sure every expense is linked to the logged in user
-        return Expense.objects.create(user=user, **validated_data)
-        
+    
+    def create(self, validated_data): 
+        validated_data['user'] = self.context['request'].user 
+        return super().create(validated_data) 
 
