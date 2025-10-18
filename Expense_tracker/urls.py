@@ -19,12 +19,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from expense.views import ExpenseViewSet, CategoryViewSet
 
-router = DefaultRouter()
-router.register(r'expenses', ExpenseViewSet, basename='expense')
-router.register(r'categories', CategoryViewSet, basename='category')
+# router = DefaultRouter()
+# router.register(r'expenses', ExpenseViewSet, basename='expense')
+# router.register(r'categories', CategoryViewSet, basename='category')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    # path('api/', include(router.urls)),
     path('api/', include('expense.urls')),
 ]
